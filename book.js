@@ -10,7 +10,7 @@ class Book{
         this.body=body
     }
     
-    createFile(bookName){
+    createFile(path,fileName){
         let info=`
         ${this.title}
         ${this.Author}
@@ -18,35 +18,35 @@ class Book{
         ${this.year}
         ${this.body}
         `
-        fs.writeFile(`./forReads/${bookName}`,info,(err)=>{
+        fs.writeFile(`${path}/${fileName}`,info,(err)=>{
             if(err) throw err
-            console.log(`File Name: ${bookName} created successfully
+            console.log(`File Name: ${fileName} created successfully
             ${info}`)
         })
     }
 
     //function to read external files & takes in one string argument 
-    readFile(bookName){
+    readFile(path,fileName){
         
         //N.B) backtick / object /string template literals
 
-        fs.readFile(`./forReads/${bookName}`,"utf8",function(err,fileData){
+        fs.readFile(`${path}/${fileName}`,"utf8",function(err,fileData){
             if(err)throw err
             console.log(fileData)
         })   
     }
 
-    deleteFile(bookName){
+    deleteFile(path,fileName){
 
-        fs.unlink(`./forReads/${bookName}`,(err)=>{
+        fs.unlink(`${path}/${fileName}`,(err)=>{
             err?  
                  console.error({message:err})
             : 
-            console.log(JSON.stringify(`${bookName} succefully deleted (<_>)`,undefined,2))
+            console.log(JSON.stringify(`${fileName} succefully deleted (<_>)`,undefined,2))
         })    
     }
 
-    UpdateFile(bookName,data){
+    UpdateFile(path,fileName,data){
         let updatedData=`
         ${data.title}
         ${data.Author}
@@ -54,11 +54,11 @@ class Book{
         ${data.year}
         ${data.body}`
 
-        fs.appendFile(`./forReads/${bookName}`,updatedData,(err,file)=>{
+        fs.appendFile(`${path}/${fileName}`,updatedData,(err,file)=>{
             err?
             err=JSON.parse({message:err})
             :
-            console.log(`File Named: ${bookName} updated successfully`);
+            console.warn(`File Named: ${path+"/"+fileName} updated successfully`);
         })
         console.log(updatedData)
     }
